@@ -49,7 +49,7 @@ def turn_on(message):
 def sensor_on(message):
     while True:
         dist = sensor.distance * 100
-        if(dist <= 20):
+        if(dist <= 15):
             bot.reply_to(message,"""Hay un objeto demsiado cerca!!! \nCUIDADO!!!""")
             sleep(1)
         else:
