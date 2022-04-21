@@ -28,7 +28,7 @@ I am here to echo your kind words back to you. Just say anything nice and I'll s
 def sensor_on(message):
     while True:
         dist = sensor.distance * 100
-        if(dist <= 34):
+        if(dist <= 32):
             print("Dentro del if")
             bot.reply_to(message,"""Hay un objeto demsiado cerca!!! \nCUIDADO!!!""")
             sleep(1)
