@@ -34,6 +34,7 @@ def sensor_on(message):
             sleep(1)
         else:
             print("No hay un objeto cerca.")
+            sleep(1)
 
 
 bot.infinity_polling()
