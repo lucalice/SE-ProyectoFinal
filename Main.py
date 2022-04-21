@@ -46,7 +46,7 @@ if (__name__ == '__main__'):
                 se encendio\
                 """)
 
-    @bot.message_handler(commands=['sensorProximidad'])
+    @bot.message_handler(commands=['analiza'])
     def sensor_on(message):
         while True:
             dist = sensor.distance * 100
