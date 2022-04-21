@@ -10,7 +10,7 @@ if (__name__ == '__main__'):
     from time import sleep
     from gpiozero import LED, DistanceSensor
     import telebot
-    import DistanceSensor
+    #import DistanceSensor
     #from SensorProximidad import sensor
 
     API_TOKEN = '5113795649:AAHi0m4N7Zld-5jMurp_ObXCQJH_f7HGSOw'
