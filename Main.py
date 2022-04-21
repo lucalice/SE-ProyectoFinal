@@ -52,6 +52,8 @@ def sensor_on(message):
         if(dist <= 40):
             bot.reply_to(message,"""Hay un objeto demsiado cerca!!! \nCUIDADO!!!""")
             sleep(1)
+        else:
+            print("No hay un objeto cerca.")
 
 
 bot.infinity_polling()
