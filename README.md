@@ -39,3 +39,14 @@ Display izquierda
   - Cable 7 morado -c
   - Cable 8 azul -d
 
+
+Display Derecha
+  Display izquierda
+  - Cable 1 naranja -g
+  - Cable 2 amarillo -f 
+  - Cable 3 verde -tierra
+  - Cable 4 Amarillo -a
+  - Cable 5 Naranja -b
+  - Cable 6 Verde -e
+  - Cable 7 Amarillo -c
+  - Cable 8 Naranja -d
