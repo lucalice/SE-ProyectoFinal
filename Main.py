@@ -9,6 +9,8 @@ import os
 from time import sleep
 from gpiozero import LED, DistanceSensor
 import telebot
+import sys
+import Adafruit_DHT
 
 API_TOKEN = '5113795649:AAHi0m4N7Zld-5jMurp_ObXCQJH_f7HGSOw'
 
@@ -35,6 +37,15 @@ def sensor_on(message):
         else:
             print("No hay un objeto cerca.")
             sleep(1)
+            
+
+@bot.message_handler(commands=['temperatura'])
+def sensor_on(message):
+    humedad = 0
+    temperatura = 0
+    while True:
+        humedad, temperatura = Adafruit_DHT.read_retry(11, 4) #(tipo de sensor, pin)
+        print ("Temp: {0:0.1f} ºC",temperatura)
 
 
 bot.infinity_polling()
