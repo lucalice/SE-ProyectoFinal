@@ -27,7 +27,7 @@ I am here to echo your kind words back to you. Just say anything nice and I'll s
 """)
 
 @bot.message_handler(commands=['analiza'])
-def sensor_on(message):
+def sensor_onP(message): #Sensor de proximidad
     while True:
         dist = sensor.distance * 100
         if(dist <= 32):
@@ -40,12 +40,12 @@ def sensor_on(message):
             
 
 @bot.message_handler(commands=['temperatura'])
-def sensor_on(message):
+def sensor_onT(message): #Sensor de temperatura
     humedad = 0
     temperatura = 0
     while True:
         humedad, temperatura = Adafruit_DHT.read_retry(11, 4) #(tipo de sensor, pin)
-        print ("Temp: {0:0.1f} ºC",temperatura)
+        print ("Temperatura actual: {0:0.1f} ºC",temperatura)
 
 
 bot.infinity_polling()
