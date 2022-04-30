@@ -54,7 +54,7 @@ Display Derecha
 
 Instalacion de biblioteca Adafruit:
 Si no se cuenta con la biblioteca Adafruit de python instalada, entonces se tendra que clonar el codigo fuente de un repositorio de github con el siguiente comando:
-  - git clone https://github.com/adafruit/Adagruit_Python_DHT.git
+  - git clone https://github.com/adafruit/Adafruit_Python_DHT.git
 
 Una vez clonado el repositorio, nos ubicamos en la carpeta creada de Adafruit e instalamos
   - cd Adafruit_Python_DHT
