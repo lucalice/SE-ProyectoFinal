@@ -44,7 +44,7 @@ def sensor_onT(message): #Sensor de temperatura
     humedad = 0
     temperatura = 0
     while True:
-        humedad, temperatura = Adafruit_DHT.read_retry(11, 4) #(tipo de sensor, pin)
+        humedad, temperatura = Adafruit_DHT.read_retry(11, 3) #(tipo de sensor, pin)
         print ("Temperatura actual: {0:0.1f} ºC",temperatura)
 
 
