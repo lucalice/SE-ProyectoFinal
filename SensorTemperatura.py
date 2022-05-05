@@ -11,14 +11,23 @@ while True:
     print ("Temp: {0:0.1f} ºC",temperatura)
     
 #Codigo para enviar el dato al led de 7 segmentos
-diccionario = {
-    'A': 10,
-    'B': 12,
-    'C': 16,
-    'D': 11,
+diccionarioLed1 = {
+    'A': 5,
+    'B': 7,
+    'C': 8,
+    'D': 10,
     'E': 13,
-    'F': 8,
-    'G': 32, }
+    'F': 15,
+    'G': 16, }
+
+diccionarioLed2 = {
+    'A': 18,
+    'B': 19,
+    'C': 21,
+    'D': 22,
+    'E': 23,
+    'F': 24,
+    'G': 26, }
 
 numeros = {
     '0': '1111110',
