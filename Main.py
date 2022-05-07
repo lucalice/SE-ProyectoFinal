@@ -10,13 +10,17 @@ from time import sleep
 from gpiozero import LED, DistanceSensor
 import telebot
 import sys
-import Adafruit_DHT
+import board
+import adafruit_dht
 
 API_TOKEN = '5113795649:AAHi0m4N7Zld-5jMurp_ObXCQJH_f7HGSOw'
 
 bot = telebot.TeleBot(API_TOKEN)
 led = LED(19)
-sensor = DistanceSensor(echo=18, trigger=17)
+sensor = DistanceSensor(echo=27, trigger=17)
+sensorHyT = adafruit_dht.DHT11 #Adafruit_DHT.DHT11
+dhtDevice = adafruit_dht.DHT11(board.D18, use_pulseio=False)
+
 
 # Handle '/start' and '/help'
 @bot.message_handler(commands=['help', 'start'])
@@ -41,11 +45,29 @@ def sensor_onP(message): #Sensor de proximidad
 
 @bot.message_handler(commands=['temperatura'])
 def sensor_onT(message): #Sensor de temperatura
-    humedad = 0
-    temperatura = 0
-    while True:
-        humedad, temperatura = Adafruit_DHT.read_retry(11, 3) #(tipo de sensor, pin)
-        print ("Temperatura actual: {0:0.1f} ºC",temperatura)
+    #while True:
+    try:
+        # Print the values to the serial port
+        temperature_c = dhtDevice.temperature
+        temperature_f = temperature_c * (9 / 5) + 32
+        humidity = dhtDevice.humidity
+        print(
+            "Temp: {:.1f} F / {:.1f} C    Humidity: {}% ".format(
+                temperature_f, temperature_c, humidity
+            )
+        )
+        bot.reply_to(message,"""La temperatura es de """+str(temperature_c)+""" grados centígrados.""")
 
+    except RuntimeError as error:
+        # Errors happen fairly often, DHT's are hard to read, just keep going
+        print(error.args[0])
+        print("Hola")
+        sleep(1)
+        #continue
+    except Exception as error:
+        dhtDevice.exit()
+        raise error
+
+    sleep(1)
 
 bot.infinity_polling()
