@@ -56,6 +56,11 @@ def sensor_onT(message): #Sensor de temperatura
                 temperature_f, temperature_c, humidity
             )
         )
+        decima = getCentecima(temperature_c)
+        print(decima)
+        centecima = getDecima(temperature_c, decima)
+        print(centecima)
+        
         bot.reply_to(message,"""La temperatura es de """+str(temperature_c)+""" grados centígrados.""")
 
     except RuntimeError as error:
@@ -69,5 +74,11 @@ def sensor_onT(message): #Sensor de temperatura
         raise error
 
     sleep(1)
+    
+def getCentecima(numero):
+    return numero // 10
+
+def getDecima(numero,centecima):
+    return - ((centecima * 10) - numero)
 
 bot.infinity_polling()
