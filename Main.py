@@ -17,6 +17,10 @@ API_TOKEN = '5113795649:AAHi0m4N7Zld-5jMurp_ObXCQJH_f7HGSOw'
 
 bot = telebot.TeleBot(API_TOKEN)
 led = LED(19)
+A = LED(0)
+B = LED(5)
+C = LED(6)
+D = LED(13)
 sensor = DistanceSensor(echo=27, trigger=17)
 sensorHyT = adafruit_dht.DHT11 #Adafruit_DHT.DHT11
 dhtDevice = adafruit_dht.DHT11(board.D18, use_pulseio=False)
@@ -56,17 +60,18 @@ def sensor_onT(message): #Sensor de temperatura
                 temperature_f, temperature_c, humidity
             )
         )
-        decima = getCentecima(temperature_c)
-        print(decima)
-        centecima = getDecima(temperature_c, decima)
+        centecima = getCentecima(temperature_c)
         print(centecima)
+        decima = getDecima(temperature_c, centecima)
+        print(decima)
+        
+        numeros(centecima)
         
         bot.reply_to(message,"""La temperatura es de """+str(temperature_c)+""" grados centígrados.""")
 
     except RuntimeError as error:
         # Errors happen fairly often, DHT's are hard to read, just keep going
         print(error.args[0])
-        print("Hola")
         sleep(1)
         #continue
     except Exception as error:
@@ -80,5 +85,12 @@ def getCentecima(numero):
 
 def getDecima(numero,centecima):
     return - ((centecima * 10) - numero)
+    
+def numeros(decena):
+    if(decena == 2):
+        A.off()
+        B.on()
+        C.off()
+        D.off() 
 
 bot.infinity_polling()

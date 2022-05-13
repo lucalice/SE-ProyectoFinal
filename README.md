@@ -30,13 +30,13 @@ Materiales faltantes:
 Cables conectados display 7 segmentos
 
 Display izquierda
-  - Cable 1 naranja -g
-  - Cable 2 amarillo -f 
-  - Cable 3 verde -tierra
-  - Cable 4 azul -a
-  - Cable 5 morado -b
-  - Cable 6 gris -e
-  - Cable 7 morado -c
+  - Cable 1 naranja -g gpio0
+  - Cable 2 amarillo -f gpio5
+  - Cable 3 verde -tierra gpio 6
+  - Cable 4 azul -a gpio 13
+  - Cable 5 morado -b gpio 19
+  - Cable 6 gris -e gpio 26
+  - Cable 7 morado -c 
   - Cable 8 azul -d
 
 
