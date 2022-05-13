@@ -7,7 +7,7 @@ from curses import echo
 from distutils import command
 import os
 from time import sleep
-from gpiozero import LED, DistanceSensor
+from gpiozero import LED, DistanceSensor, LEDBoard
 import telebot
 import sys
 import board
@@ -17,10 +17,8 @@ API_TOKEN = '5113795649:AAHi0m4N7Zld-5jMurp_ObXCQJH_f7HGSOw'
 
 bot = telebot.TeleBot(API_TOKEN)
 led = LED(19)
-A = LED(0)
-B = LED(5)
-C = LED(6)
-D = LED(13)
+leds = LEDBoard(0, 5, 6, 13)
+leds2 = LEDBoard(12, 16, 20, 21)
 sensor = DistanceSensor(echo=27, trigger=17)
 sensorHyT = adafruit_dht.DHT11 #Adafruit_DHT.DHT11
 dhtDevice = adafruit_dht.DHT11(board.D18, use_pulseio=False)
@@ -30,8 +28,8 @@ dhtDevice = adafruit_dht.DHT11(board.D18, use_pulseio=False)
 @bot.message_handler(commands=['help', 'start'])
 def send_welcome(message):
     bot.reply_to(message, """\
-Hi there, I am LucadevBot.
-I am here to echo your kind words back to you. Just say anything nice and I'll say the exact same thing to you!\
+    Hola! Esta es la maceta Inteligente que se encargarà de mantenerte
+        al tanto de tu planta. Saludos! (Versión 1)\
 """)
 
 @bot.message_handler(commands=['analiza'])
@@ -61,11 +59,9 @@ def sensor_onT(message): #Sensor de temperatura
             )
         )
         centecima = getCentecima(temperature_c)
-        print(centecima)
         decima = getDecima(temperature_c, centecima)
-        print(decima)
-        
         numeros(centecima)
+        numeros2(decima)
         
         bot.reply_to(message,"""La temperatura es de """+str(temperature_c)+""" grados centígrados.""")
 
@@ -73,7 +69,6 @@ def sensor_onT(message): #Sensor de temperatura
         # Errors happen fairly often, DHT's are hard to read, just keep going
         print(error.args[0])
         sleep(1)
-        #continue
     except Exception as error:
         dhtDevice.exit()
         raise error
@@ -86,11 +81,44 @@ def getCentecima(numero):
 def getDecima(numero,centecima):
     return - ((centecima * 10) - numero)
     
-def numeros(decena):
-    if(decena == 2):
-        A.off()
-        B.on()
-        C.off()
-        D.off() 
+def numeros(num):
+    if (num == 1):
+        leds.value = (1, 0, 0, 0)
+    elif(num == 2):
+        leds.value = (0, 1, 0, 0)
+    elif(num == 3):
+        leds.value = (1, 1, 0, 0)
+    elif(num == 4):
+        leds.value = (0, 0, 1, 0)
+    elif(num == 5):
+        leds.value = (1, 0, 1, 0)
+    elif(num == 6):
+        leds.value = (0, 1, 1, 0)
+    elif(num == 7):
+        leds.value = (1, 1, 1, 0)
+    elif(num == 8):
+        leds.value = (0, 0, 0, 1)
+    elif(num == 9):
+        leds.value = (1, 0, 0, 1)
+        
+def numeros2(num):
+    if (num == 1):
+        leds2.value = (1, 0, 0, 0)
+    elif(num == 2):
+        leds2.value = (0, 1, 0, 0)
+    elif(num == 3):
+        leds2.value = (1, 1, 0, 0)
+    elif(num == 4):
+        leds2.value = (0, 0, 1, 0)
+    elif(num == 5):
+        leds2.value = (1, 0, 1, 0)
+    elif(num == 6):
+        leds2.value = (0, 1, 1, 0)
+    elif(num == 7):
+        leds2.value = (1, 1, 1, 0)
+    elif(num == 8):
+        leds2.value = (0, 0, 0, 1)
+    elif(num == 9):
+        leds2.value = (1, 0, 0, 1)
 
 bot.infinity_polling()
