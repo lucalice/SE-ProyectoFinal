@@ -24,6 +24,20 @@ temperature_f = 0
 sensorHyT = adafruit_dht.DHT11 #Adafruit_DHT.DHT11
 dhtDevice = adafruit_dht.DHT11(board.D18, use_pulseio=False)
 
+# PARA SEMAFORO
+puerto1 = 17
+puerto2 = 18
+puerto3 = 27
+
+# Esos elegi, pero sia ya estan ocupados pueden cambiar
+GPIO.setmode(GPIO.BCM)
+#led amarillo
+GPIO.setup(puerto1, GPIO.OUT)
+#led rojo
+GPIO.setup(puerto2, GPIO.OUT)
+#led verde
+GPIO.setup(puerto3, GPIO.OUT)
+# AQUI TERMINA SEMAFORO
 
 # Handle '/start' and '/help'
 @bot.message_handler(commands=['help', 'start'])
@@ -125,6 +139,37 @@ def numeros2(num):
         leds2.value = (1, 0, 0, 1)
         
 def prueba():
-    print(temperature_f)
+    # print(temperature_f)
+    if(temperature_f > 40.0):
+        # Inserte funciones de lectura de sensores
+        print('Alerta Critica')
+        ledRojo()
+    elif(temperature_f > 30.0 && temperature_f < 40.00):
+        # Inserte funciones de lectura de sensores
+        print('Alerta')
+        ledAmarillo()
+    else:
+        # Inserte funciones de lectura de sensores
+        print('Todo ok')
+        ledVerde()
 
 bot.infinity_polling()
+
+def ledRojo():
+  #apagar el led verde y amarillo
+  GPIO.output(puerto3, GPIO.LOW)
+  GPIO.output(puerto1, GPIO.LOW)
+  #prender el led rojo
+  GPIO.output(puerto2, GPIO.HIGH)
+def ledAmarillo():
+  #apagar el led verde y rojo
+  GPIO.output(puerto3, GPIO.LOW)
+  GPIO.output(puerto2, GPIO.LOW)
+  #prender el led rojo
+  GPIO.output(puerto1, GPIO.HIGH)
+def ledVerde():
+  #apagar el led rojo y amarillo
+  GPIO.output(puerto2, GPIO.LOW)
+  GPIO.output(puerto1, GPIO.LOW)
+  #prender el led rojo
+  GPIO.output(puerto3, GPIO.HIGH)
