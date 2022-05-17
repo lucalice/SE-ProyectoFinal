@@ -20,6 +20,7 @@ led = LED(19)
 leds = LEDBoard(0, 5, 6, 13)
 leds2 = LEDBoard(12, 16, 20, 21)
 sensor = DistanceSensor(echo=27, trigger=17)
+temperature_f = 0
 sensorHyT = adafruit_dht.DHT11 #Adafruit_DHT.DHT11
 dhtDevice = adafruit_dht.DHT11(board.D18, use_pulseio=False)
 
@@ -51,6 +52,7 @@ def sensor_onT(message): #Sensor de temperatura
     try:
         # Print the values to the serial port
         temperature_c = dhtDevice.temperature
+        global temperature_f 
         temperature_f = temperature_c * (9 / 5) + 32
         humidity = dhtDevice.humidity
         print(
@@ -58,6 +60,7 @@ def sensor_onT(message): #Sensor de temperatura
                 temperature_f, temperature_c, humidity
             )
         )
+        prueba()
         centecima = getCentecima(temperature_c)
         decima = getDecima(temperature_c, centecima)
         numeros(centecima)
@@ -120,5 +123,8 @@ def numeros2(num):
         leds2.value = (0, 0, 0, 1)
     elif(num == 9):
         leds2.value = (1, 0, 0, 1)
+        
+def prueba():
+    print(temperature_f)
 
 bot.infinity_polling()
