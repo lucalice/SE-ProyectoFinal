@@ -29,16 +29,21 @@ dhtDevice = adafruit_dht.DHT11(board.D18, use_pulseio=False)
 @bot.message_handler(commands=['help', 'start'])
 def send_welcome(message):
     bot.reply_to(message, """\
-    Hola! Esta es la maceta Inteligente que se encargarà de mantenerte
-        al tanto de tu planta. Saludos! (Versión 1)\
+    Hola! Esta es la maceta Inteligente que se encargarà de mantenerte al tanto de tu planta. Saludos! (Versión 1)\
+        
         
     1. Utiliza el comando "/intruso" para poder ver si es que hay o habrá 
     intrusos dentro de nuestro sistema.
+    
     
     2. Utiliza el comando "/temperatura" para saber cual es la 
     temperatura actual de nuestro sistema. Recibirás actualizaciones cada
     5 minutos del estatus de la temperatura. Se encenderá uno de los 3 leds 
     (verde, amarillo o rojo), los cuales te indicarán el estatus
+    
+    3. Utiliza el comando "/humedad" para saber cual es la humedad que hay 
+    sistema
+    
 """)
 
 @bot.message_handler(commands=['intruso'])
@@ -64,9 +69,9 @@ def sensor_onT(message): #Sensor de temperatura
             temperature_f = temperature_c * (9 / 5) + 32
             humidity = dhtDevice.humidity
             print(
-                "Temp: {:.1f} F / {:.1f} C    Humidity: {}% ".format(
-                    temperature_f, temperature_c, humidity
-                )
+                "Temp: {:.1f} F / {:.1f} C   ".format(
+                    temperature_f, temperature_c 
+                    )
             )
             centecima = getCentecima(temperature_c)
             decima = getDecima(temperature_c, centecima)
@@ -83,6 +88,20 @@ def sensor_onT(message): #Sensor de temperatura
             dhtDevice.exit()
             raise error
         sleep(60)
+        
+@bot.message_handler(commands=['humedad'])
+def humedad(message):
+    try: 
+        humidity = dhtDevice.humidity
+        bot.reply_to(message,"""La humedad es del """+str(humidity)+"""%""")
+    except RuntimeError as error:
+        # Errors happen fairly often, DHT's are hard to read, just keep going
+        print(error.args[0])
+        sleep(1)
+    except Exception as error:
+        dhtDevice.exit()
+        raise error
+    
     
 def getCentecima(numero):
     return numero // 10
